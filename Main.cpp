@@ -1,18 +1,19 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <cstdlib>
+#include <cstdlib> //for rand()
 
 class TicTacToe {
 
-	char symbol;
-	std::vector<int> filled = {10};
-
+	char symbol; //Initialize for X and O, I DON'T CARE THAT IT ISN'T INITIALIZED YET, COMPILER
+	
+	std::vector<int> filled = {10}; //When a spot is filled, adds the corresponding position value to this vector.
+					//Idk why but compiler doesn't like it when this is empty so I put an impossible number in it
 public:
 	bool gameover = false; //used later for escaping the main loop
 
-	bool checkiffilled(int pos) { 
-		for (int i : filled) {
+	bool checkiffilled(int pos) { //used for checking if a spot has 
+		for (int i : filled) { //already been filled with X or O
 			if (i == pos) {
 				return false;
 				break;
@@ -20,7 +21,7 @@ public:
 		}
 	}
 
-	char board[5][5] = {
+	char board[5][5] = { //Le board
 		{' ', '|', ' ', '|', ' '},
 		{'-', '+', '-', '+', '-'},
 		{' ', '|', ' ', '|', ' '},
@@ -28,7 +29,7 @@ public:
 		{' ', '|', ' ', '|', ' '}
 	};
 
-	void buildBoard() {
+	void buildBoard() { //read the function name lol
 		for (int r = 0; r <= 4; r++) {
 			for (int c = 0; c <= 4; c++) {
 				std::cout << board[r][c];
@@ -37,12 +38,12 @@ public:
 		};
 	}
 
-	void Move(int pos, std::string player) {
+	void Move(int pos, std::string player) { //defines what a "player" does in a move
 
 		
-		if (player == "player") 
+		if (player == "player") //yes these are predetermined, who tf chooses "O" willingly anyways?
 		{
-			symbol = 'X';
+			symbol = 'X'; 
 		} else if (player == "CPU")
 		{
 			symbol = 'O';
@@ -52,9 +53,9 @@ public:
 		if (checkiffilled(pos) != false) {
 			switch (pos) {
 			case 1:
-				board[0][0] = symbol;
-				filled.push_back(pos);
-				buildBoard();
+				board[0][0] = symbol; //adds X or O to board
+				filled.push_back(pos); //adds the position of X/O to vector
+				buildBoard(); //rebuilds the board with given symbol added
 				break;
 			case 2:
 				board[0][2] = symbol;
@@ -97,16 +98,16 @@ public:
 				buildBoard();
 				break;
 			default:
-				std::cout << "Not a valid number! Lose a turn!\n";
+				std::cout << "Not a valid number! Lose a turn!\n"; //I couldn't figure out how to loop the function, sue me
 				break;
 			};
 		};
 
-		std::cout << "******************\n";
+		std::cout << "******************\n"; //fancy line cause fancy
 
 	}
 
-	void Play() {
+	void Play() { //Human interaction
 		int play;
 		std::cout << "Pick a position (1-9)\n";
 		std::cin >> play;
@@ -114,7 +115,7 @@ public:
 		Checkwin("player", 'X');
 	};
 
-	void CPU() {
+	void CPU() { //Computer does beep boop
 		int choice = rand() % 8 + 1; //Random choice from 1 to 9
 		Move(choice, "CPU");
 		Checkwin("CPU", 'O');
@@ -163,12 +164,12 @@ int main() {
 	std::cout << "Welcome to my Tic Tac Toe game!\n" << "******************\n" << "Have fun! Or don't...\n";
 	TicTacToe Test;
 	Test.buildBoard();
-	while (Test.gameover == false) {
+	while (Test.gameover == false) { //loop I was talking about earlier
 		Test.Play();
 		Test.CPU();
 	};
 
-	system("pause");
+	system("pause"); //<--- Don't do this, this is bad, but as you can see, I don't care
 
 
 }
